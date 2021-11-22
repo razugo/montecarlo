@@ -5,6 +5,7 @@ from lib.configuration import SIMULATIONS, TOP_X
 from lib.portfolio import Portfolio
 import pandas as pd
 import matplotlib.pyplot as plt
+import multiprocessing as mp
 
 
 class Simulation:
@@ -22,6 +23,16 @@ class Simulation:
         for portfolio in self.portfolios:
             portfolio.generate_portfolio_data(self.historical_returns, self.historical_covariance)
             self.results = self.results.append(portfolio.result_data_frame)
+
+    def run_multiprocess_simulation(self):
+        # Multiprocessing code goes here
+        manager = mp.Manager()
+        return_list = manager.list()
+        jobs = []
+        # for portfolio in self.portfolios:
+        #
+        # # need to create portfolio function to call
+        # # p = mp.Process(target=worker, args=(i, return_dict))
 
     def sort_simulation(self):
         self.results = self.results.sort_values("Sharpe Ratio", ascending=False)
